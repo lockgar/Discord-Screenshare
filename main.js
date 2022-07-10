@@ -1,6 +1,6 @@
 require('dotenv').config()
 const { Stream } = require('./stream')
-const Discord = require('discord.js')
+const {Discord, Intents} = require('discord.js')
 const { writeFile } = require('fs')
 let users = require('./users.json')
 
