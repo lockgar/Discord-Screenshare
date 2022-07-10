@@ -1,6 +1,8 @@
 require('dotenv').config()
 const { Stream } = require('./stream')
-const {Client, Intents} = require('discord.js-selfbot-v13')
+const {Client, Intents} = require('discord.js')
+const allIntents = new Intents(32767);
+const client = new Client({ intents: allIntents })
 const { writeFile } = require('fs')
 let users = require('./users.json')
 
