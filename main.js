@@ -1,6 +1,6 @@
 require('dotenv').config()
 const { Stream } = require('./stream')
-const Discord = require('discord.js-selfbot-v13')
+const Discord = require('discord.js')
 const { writeFile } = require('fs')
 let users = require('./users.json')
 
