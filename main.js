@@ -9,9 +9,8 @@ let loop = false
 const reject = '❌'
 const accept = '✅'
 const prefix = '*'
-const allIntents = new Intents(32767);
-const client = new Client({ intents: allIntents })
-client.login(token);
+const client = new Client();
+//client.login(token);
 const token = process.env.token
 let stream = new Stream(token)
 const url_expression = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
