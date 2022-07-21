@@ -9,9 +9,9 @@ class Video {
         this.driver.executeScript('video.innerHTML = null')
 
         if (youtube_dl) {
-            await msg.edit("Fetching video formats...")
+            await msg.edit("Elérhető videó formátumok betöltése...")
                 .then(async msg => {
-                    console.log("Fetching video formats...")
+                    console.log("Elérhető videó formátumok betöltése...")
                     try {
                         let info = await ytdl.getInfo(url)
                         let formats = info.formats.filter(f => f.hasVideo && f.hasAudio)
@@ -28,8 +28,8 @@ class Video {
 
         await this.driver.executeScript(`video.src='${url}'`)
             .then(_ => {
-                console.log('Loading...')
-                msg.edit("Loading...")
+                console.log('Betöltés...')
+                msg.edit("Betöltés...")
                     .then(_ => {
                         var int1 = setInterval(() => {
                             is_error && clearInterval(int1)
@@ -67,7 +67,7 @@ class Video {
                         is_load = true
                         this.duration = result
                         this.in_loading = false
-                        msg.edit("Done, Type `*play` to start playing.")
+                        msg.edit("A betöltés kész, írj `*play` a lejátszás megkezdéséhez.")
                         clearInterval(int2)
                     }
                     else if (is_error)
@@ -95,13 +95,13 @@ class Video {
     }
 
     play() {
-        console.log("Play")
+        console.log("Lejátszás")
         this.start()
         this.driver.executeScript('video.play()')
     }
 
     pause() {
-        console.log("Pause")
+        console.log("Pillanatállj")
         this.driver.executeScript('video.pause()')
     }
 
@@ -144,9 +144,9 @@ class Stream extends Video {
         const chrome_options = new chrome.Options()
         headless && chrome_options.addArguments('--headless')
         chrome_options.addArguments('--no-sandbox')
-        chrome_options.addArguments('--window-size=1920,1080')
+        chrome_options.addArguments('--window-size=1280,720')
         chrome_options.addArguments('--disable-web-security')
-        chrome_options.addArguments("--disable-gpu")
+        //chrome_options.addArguments("--disable-gpu")
         chrome_options.addArguments("--disable-features=NetworkService")
         chrome_options.addArguments('--disable-dev-shm-usage')
         chrome_options.addArguments('--autoplay-policy=no-user-gesture-required')
@@ -222,7 +222,7 @@ class Stream extends Video {
     }
 
     stop() {
-        console.log("Stop")
+        console.log("Megállítás")
         this.init = false
         this.driver.get(this.client_url)
     }
