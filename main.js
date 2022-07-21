@@ -1,8 +1,6 @@
 require('dotenv').config()
 const { Stream } = require('./stream')
-const {Client, Intents} = require('discord.js')
-const allIntents = new Intents(32767);
-const client = new Client({ intents: allIntents })
+const Discord = require('discord.js-selfbot-v13')
 const { writeFile } = require('fs')
 let users = require('./users.json')
 
@@ -11,7 +9,7 @@ let loop = false
 const reject = '❌'
 const accept = '✅'
 const prefix = '*'
-
+const client = new Discord.Client()
 const token = process.env.token
 let stream = new Stream(token)
 const url_expression = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
