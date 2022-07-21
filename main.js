@@ -151,7 +151,7 @@ client.on('messageCreate', msg => {
                         return
                     }
 
-                    msg.reply('User added')
+                    msg.reply('Felhasználó hozzáadva')
                 })
                 break;
             case 'remove':
@@ -170,7 +170,7 @@ client.on('messageCreate', msg => {
                         return
                     }
 
-                    msg.reply('User removed')
+                    msg.reply('Felhasználó törölve')
                 })
                 break;
             case 'list':
