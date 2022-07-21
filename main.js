@@ -15,15 +15,15 @@ let stream = new Stream(token)
 const url_expression = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
 const url_regex = new RegExp(url_expression)
 
-const helpMessage = `Help\n
-    *p \`url\` | Youtube | direct link (without downloading)\n
-    *play | Play video\n
-    *pause | Pause video\n
-    *duration | Show video duration\n
-    *seek | Show current video time\n
-    *seek \`sec, +sec, -sec\` | Change video time\n
-    *loop | Toggle playing video on loop\n
-    *stop | Stop streaming
+const helpMessage = `Segítség\n
+    *p \`url\` | Youtube | közvetlen hivatkozás (letöltés nélkül)\n
+    *play | Videó lejátszása\n
+    *pause | Videó pillanatállj\n
+    *duration | Video hosszának megjelenítése\n
+    *seek | Jelenlegi időbélyeg\n
+    *seek \`sec, +sec, -sec\` | Videó időbélyeg változtatás\n
+    *loop | Folyamatos lejátszás bekapcsolása\n
+    *stop | Stream leállítása
 `
 
 const notAllowed = msg => {
@@ -46,13 +46,13 @@ client.on('messageCreate', msg => {
         switch (command) {
             case 'p':
                 if (stream.in_progress && notAllowed(msg)) {
-                    msg.reply("Another session is already in progress")
+                    msg.reply("Már egy videó lejátszása folyamatban van.")
                     return
                 }
 
                 const voice_channel = msg.member.voice.channel
                 if (!voice_channel) {
-                    msg.reply("You need to be in a voice channel to use this command")
+                    msg.reply("Hangcsatornában kell lenned, hogy ezt a parancsot használhatsd.")
                     return
                 }
 
@@ -67,7 +67,7 @@ client.on('messageCreate', msg => {
                 }
 
                 !stream.in_loading ?
-                    msg.channel.send("Please wait...")
+                    msg.channel.send("Kérlek várj...")
                         .then(msg => {
                             // not safe...
                             if (url.includes('youtube.com') || url.includes('youtu.be'))
@@ -75,7 +75,7 @@ client.on('messageCreate', msg => {
                             else
                                 stream.load(url, false, msg)
                         }) :
-                    msg.reply("Another video loading is already in progress, Try again later.")
+                    msg.reply("Már egy másik videó betöltése folyamatban van. Próbáld meg újra később.")
                 break;
             case 'play':
                 notAllowed(msg) ?
@@ -90,7 +90,7 @@ client.on('messageCreate', msg => {
             case 'duration':
                 stream.duration ?
                     msg.channel.send(stream.hms(stream.duration)) :
-                    msg.reply("N/A, try again later")
+                    msg.reply("N/A, próbáld újra")
                 break;
             case 'seek':
                 if (content[1])
@@ -102,7 +102,7 @@ client.on('messageCreate', msg => {
                         if (result)
                             msg.channel.send(stream.hms(result))
                         else
-                            msg.reply("N/A, try again later")
+                            msg.reply("N/A, próbáld újra")
                     })
                 break;
             case 'loop':
@@ -117,11 +117,11 @@ client.on('messageCreate', msg => {
                                     stream.driver.executeScript('video.play()')
                             })
                         }, 100)
-                        msg.reply("Video loop set")
+                        msg.reply("A videó folyamatos lejátszása beállítva.")
                     } else {
                         loop = false
                         clearInterval(intLoop)
-                        msg.reply("Video loop unset")
+                        msg.reply("A videó folyamatos lejátszása kikapcsolva")
                     }
                 }
                 break;
@@ -159,7 +159,7 @@ client.on('messageCreate', msg => {
                 if (!id || msg.author.id != process.env.owner_id) return
 
                 if (!users.includes(id)) {
-                    msg.reply('User does not exist')
+                    msg.reply('A felhasználó nem létezik')
                     return
                 }
 
@@ -174,14 +174,14 @@ client.on('messageCreate', msg => {
                 })
                 break;
             case 'list':
-                msg.channel.send(users.length !== 0 ? users.join('\n\n') : 'No user available')
+                msg.channel.send(users.length !== 0 ? users.join('\n\n') : 'Nincs hozzárendelt felhasználó')
                 break;
             default:
-                msg.reply("Unknown command, type `*help` for list of commands")
+                msg.reply("Ismeretlen parancs,írd be `*help` az elérhető parancsok megjelenítéséhez")
         }
 
         process.env.log_channel_id &&
-            client.channels.cache.get(process.env.log_channel_id).send(`Command: ${msg.content}\nSender: ${msg.author.username} | ${msg.author.id}`)
+            client.channels.cache.get(process.env.log_channel_id).send(`Parancs: ${msg.content}\nKüldő: ${msg.author.username} | ${msg.author.id}`)
     }
 })
 
